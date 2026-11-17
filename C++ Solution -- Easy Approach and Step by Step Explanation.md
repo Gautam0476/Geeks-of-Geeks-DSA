@@ -1,32 +1,10 @@
 ## 01. C++ Solution || Easy Approach and Step by Step Explanation
 
-The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/sum-of-all-sub-sequences-of-a-number3437/1)
+The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/the-pattern-matcher/1)
 
 ### Problem Description
 
-**Task:** Given a string s which consists of digits, find sum of all digits across all non-empty subsequences of s.Note: Since the answer can be very large, return it modulo 10⁹ + 7.Examples:Input: s = "123"
-
-#### Examples
-
-##### Example 1
-
-- **Output:**
-```text
-24
-```
-- **Explanation:** The non-empty subsequences are: [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]. The sum of all digits in these subsequences is: 1 + 2 + 3 + (1 + 2) + (1 + 3) + (2 + 3) + (1 + 2 + 3) = 24.
-
-##### Example 2
-
-- **Input:**
-```text
-s = "405"
-```
-- **Output:**
-```text
-36
-```
-- **Explanation:** The non-empty subsequences are: [4], [0], [5], [4, 0], [4, 5], [0, 5], [4, 0, 5]. The sum of all digits in these subsequences is 36.
+**Task:** Given a string s made of two characters of 'x' and 'y'. The task is to verify whether s is made by concatenating substrings that follow the pattern x^ny^n (equal number of y's follow equal number of x's). Examples:Input: s = "xxyyxy" Output: trueExplanation: The string can be split into "xxyy" + "xy". Both substrings contain an equal number of consecutive 'x' and 'y' characters.Input: s = "xyx"Output: falseExplanation: The last 'x' cannot form a valid substring because it is not followed by a matching 'y'.
 
 ### Time and Auxiliary Space Complexity
 
@@ -37,31 +15,40 @@ s = "405"
 
 #### Solution 1 (C++)
 
-- **Submitted:** 2026-11-15 08:12:12
+- **Submitted:** 2026-11-17 07:38:29
 - **Status:** Correct
 - **Marks:** 2
 
 ```cpp
 class Solution {
 public:
-    int subsequenceSum(string &s) {
-        const long long MOD = 1e9 + 7;
-
-        long long sum = 0;
+    bool findPattern(string& s) {
         int n = s.size();
+        int i = 0;
 
-        for (char c : s) {
-            sum = (sum + (c - '0')) % MOD;
+        while (i < n) {
+            int x = 0, y = 0;
+
+            // Count consecutive x's
+            while (i < n && s[i] == 'x') {
+                x++;
+                i++;
+            }
+
+            // Count consecutive y's
+            while (i < n && s[i] == 'y') {
+                y++;
+                i++;
+            }
+
+            // Both counts must be equal and non-zero
+            if (x == 0 || x != y)
+                return false;
         }
 
-        long long power = 1;
-        for (int i = 0; i < n - 1; i++) {
-            power = (power * 2) % MOD;
-        }
-
-        return (sum * power) % MOD;
+        return true;
     }
 };
 ```
 
-*Generated on: 11/15/2026, 8:13:08 AM*
+*Generated on: 11/17/2026, 7:44:16 AM*
