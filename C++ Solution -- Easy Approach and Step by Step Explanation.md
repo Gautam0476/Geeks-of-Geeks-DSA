@@ -1,61 +1,43 @@
 ## 01. C++ Solution || Easy Approach and Step by Step Explanation
 
-The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/longest-subarray-with-sum-divisible-by-k1259/1)
+The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/count-number-of-edges-in-an-undirected-graph/1)
 
 ### Problem Description
 
-**Task:** Given an array arr[] and a positive integer k, find the length of the longest subarray with the sum of the elements divisible by k.Note: If there is no subarray with sum divisible by k, then return 0.Examples :Input: arr[] = [2, 7, 6, 1, 4, 5], k = 3
+**Task:** Given an undirected graph with V vertices numbered from 0 to V - 1, represented by an adjacency list adj[][], where adj[i] contains the vertices adjacent to vertex i. Return the total number of edges present in the graph.Examples:Input: adj[][] = [[1, 2], [0, 2], [0, 1, 3], [2]]Output: 4
 
 #### Examples
 
 ##### Example 1
 
-- **Output:**
-```text
-2
-```
-- **Explanation:** The subarray is [2, -2] has sum = 0, which is divisible by 2.
+- **Explanation:** The edges in the graph are: (0-1), (0-2), (2-3), (1-2). Hence, total number of edges = 4.Input: adj[][] = [[1], [0, 2], [1, 3], [2]]Output: 3Explanation: The edges in the graph are: (0-1), (1-2), (2-3). Hence, total number of edges = 3.
 
 ### Time and Auxiliary Space Complexity
 
-- **Expected Time Complexity:** O(n)
-- **Expected Auxiliary Space Complexity:** O(min(n, k))
+- **Expected Time Complexity:** O(V + E)
+- **Expected Auxiliary Space Complexity:** O(1)
 
 ### Accepted Solutions (1)
 
 #### Solution 1 (C++)
 
-- **Submitted:** 2026-11-22 09:12:57
+- **Submitted:** 2026-11-27 07:33:02
 - **Status:** Correct
-- **Marks:** 4
+- **Marks:** 2
 
 ```cpp
 class Solution {
 public:
-    int longestSubarrayDivK(vector<int>& arr, int k) {
-        unordered_map<int, int> mp;
+    int countEdges(vector<vector<int>> &adj) {
+        int edges = 0;
 
-        mp[0] = -1;
-
-        long long sum = 0;
-        int ans = 0;
-
-        for (int i = 0; i < arr.size(); i++) {
-            sum += arr[i];
-
-            int rem = ((sum % k) + k) % k;
-
-            if (mp.find(rem) != mp.end()) {
-                ans = max(ans, i - mp[rem]);
-            }
-            else {
-                mp[rem] = i;
-            }
+        for (auto &v : adj) {
+            edges += v.size();
         }
 
-        return ans;
+        return edges / 2;
     }
 };
 ```
 
-*Generated on: 11/22/2026, 9:18:34 AM*
+*Generated on: 11/27/2026, 7:34:39 AM*
